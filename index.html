@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Mirjalol | CV & Portfolio</title>
-
     <style>
+        html{
+  scroll-behavior: smooth;
+}
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -12,230 +15,701 @@
             color: white;
             padding-top: 80px;
         }
-
-        section {
-            padding: 60px 20px;
-            text-align: center;
-        }
-
+        section { padding: 60px 20px; text-align: center; }
+        
         /* NAVBAR */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: #020617;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 40px;
-            z-index: 1000;
-        }
-
-        .navbar .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #38bdf8;
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .navbar a:hover {
-            color: #38bdf8;
-        }
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #020617;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    overflow: hidden;
+    z-index: 1000;
+    box-sizing: border-box; /* qo‘shimcha xavfsizlik */
+}
+.navbar .logo { 
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #38bdf8; 
+    white-space: nowrap; /* logo bir qatorda turadi */
+}
+.navbar ul { 
+    list-style: none; 
+    display: flex; 
+    gap: 16px; 
+    margin: 0; 
+    padding: 0;
+    flex-wrap: wrap; /* agar kerak bo‘lsa, keyingi qatorda turadi */
+}
+.navbar ul li { 
+    flex-shrink: 0; /* tugmalar kichik bo‘lmasin */
+}
+.navbar a { 
+    color: white; 
+    text-decoration: none; 
+    white-space: nowrap; /* tugma so‘zlari bir qatorda */
+    transition: color 0.3s;
+}
+.navbar a:hover { color: #38bdf8; }
 
         /* HERO */
-        .hero h1 {
-            font-size: 42px;
-        }
+        .hero h1 { font-size: 42px; }
+        .hero span { color: #38bdf8; }
+        .hero p { color: #cbd5f5; }
 
-        .hero span {
-            color: #38bdf8;
-        }
-
-        .hero p {
-            color: #cbd5f5;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 10px 22px;
-            border: none;
-            background: #38bdf8;
-            color: black;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+        /* BUTTON */
+        button { margin-top: 15px; padding: 10px 22px; border: none; background: #38bdf8; color: black; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background-color: #0ea5e9; color: white; transform: scale(1.05); }
 
         /* SKILLS */
-        .skills {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .skill {
-            background: #1e293b;
-            padding: 15px 25px;
-            border-radius: 10px;
-        }
+        .skills { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .skill { background: #1e293b; padding: 15px 25px; border-radius: 10px; }
 
         /* PORTFOLIO */
-        .gallery {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .card {
-            width: 260px;
-            background: #1e293b;
-            border-radius: 16px;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: 0.6s;
-        }
-
-        .gallery.show .card {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card img {
-            width: 100%;
-            height: 170px;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 18px;
-        }
-
-        .card-content p {
-            color: #cbd5f5;
-            font-size: 14px;
-        }
-
-        /* CONTACT */
-        .contact a {
-            color: #38bdf8;
-            text-decoration: none;
-        }
+        .gallery { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; margin-top: 40px; opacity: 0; transform: translateY(30px); transition: 0.6s; }
+        .gallery.show { opacity: 1; transform: translateY(0); }
+        .card { width: 260px; background: #1e293b; border-radius: 16px; overflow: hidden; }
+        .card img { width: 100%; height: 170px; object-fit: cover; }
+        .card-content { padding: 18px; }
+        .card-content p { color: #cbd5f5; font-size: 14px; }
 
         /* FOOTER */
-        footer {
-            background: #020617;
-            padding: 25px 10px;
-            text-align: center;
-            font-size: 14px;
-            color: #94a3b8;
+        footer { background: #020617; padding: 25px 10px; text-align: center; font-size: 14px; color: #94a3b8; }
+        footer a { color: #38bdf8; text-decoration: none; margin: 0 8px; }
+
+        /* PORTFOLIO MODAL */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: #020617; padding: 25px; border-radius: 18px; max-width: 420px; width: 90%; text-align: center; animation: scaleIn 0.4s ease; position: relative; }
+        .modal-content img { width: 100%; border-radius: 12px; margin-bottom: 15px; }
+        .modal-content h2 { margin: 10px 0; color: #38bdf8; }
+        .modal-content p { color: #cbd5f5; font-size: 14px; }
+        .close { position: absolute; top: 15px; right: 20px; font-size: 26px; cursor: pointer; }
+        @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* CONTACT BUTTON */
+        .contact-btn { position: fixed; bottom: 100px; right: 20px; background: #38bdf8; color: black; border: none; padding: 15px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.3s, background 0.3s; animation: bounce 2s infinite; }
+        .contact-btn:hover { background-color: #0ea5e9; color: white; transform: scale(1.1); }
+        @keyframes bounce { 0%,20%,50%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-6px);} 60%{transform:translateY(-3px);} }
+
+        /* CONTACT MODAL */
+        .contact-modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(2,6,23,0.85); 
+            backdrop-filter: blur(6px); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 2000; }
+        .contact-modal-content { background: #020617; padding: 25px; border-radius: 18px; max-width: 400px; width: 90%; text-align: center; position: relative; animation: scaleIn 0.4s ease; }
+        .contact-modal-content h2 { color:#38bdf8; margin-bottom:15px; }
+        .contact-modal-content input, .contact-modal-content textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+        .contact-modal-content button { padding: 10px 20px; border: none; border-radius: 8px; background:#38bdf8; font-weight:bold; cursor:pointer; transition: 0.3s; }
+        .contact-modal-content button:hover { background-color: #0ea5e9; color: white; transform: scale(1.05); }
+
+        @media (max-width:768px) {
+            .hero h1 { font-size:32px; }
+            .navbar { flex-direction: column; gap:10px; }
         }
 
-        footer a {
-            color: #38bdf8;
-            text-decoration: none;
-            margin: 0 8px;
-        }
+        /* FADE OUT ONLY */
+.modal.fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
 
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.85);
-            backdrop-filter: blur(6px);
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
+/* FORM ERROR STYLE */
+.error {
+    color: red;
+    font-size: 13px;
+    display: none;
+    margin-top: 4px;
+}
 
-        .modal-content {
-            background: #020617;
-            padding: 25px;
-            border-radius: 18px;
-            max-width: 420px;
-            width: 90%;
-            text-align: center;
-            animation: scaleIn 0.4s ease;
-            position: relative;
-        }
+.input-error {
+    outline: 2px solid red;
+}
 
-        .modal-content img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
+.input-error {
+    border: 2px solid red;
+}
+/* ===== HAMBURGER ===== */
+.hamburger{
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+.hamburger span{
+    width:25px;
+    height:3px;
+    background:white;
+}
 
-        .modal-content h2 {
-            margin: 10px 0;
-            color: #38bdf8;
-        }
+/* ===== SIDEBAR ===== */
+#sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:260px;
+    height:100%;
+    background:#020617;
+    padding:20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index:1500;
+}
 
-        .modal-content p {
-            color: #cbd5f5;
-            font-size: 14px;
-        }
+#sidebar h3{
+    color:#38bdf8;
+}
 
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 26px;
-            cursor: pointer;
-        }
+/* ===== OVERLAY ===== */
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    z-index:1400;
+}
 
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+/* ===== SUPPORT CARD ===== */
+.support-card {
+    background:#1e293b;
+    padding:15px 20px;
+    border-radius:12px;
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    color:#cbd5f5;
+    font-family: monospace;
+}
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 32px;
-            }
+.support-card .support-text {
+    font-size:12px;
+}
 
-            .navbar {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
+.card-number-wrapper {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#020617;
+    padding:10px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.copy-btn {
+    background:none;
+    border:none;
+    color:#38bdf8;
+    cursor:pointer;
+    font-size:18px;
+}
+.copy-btn:hover {
+    color:#0ea5e9;
+}
+
+/* ===== MOBILE NAVBAR FIX ===== */
+@media (max-width:768px){
+
+  .navbar{
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 14px;
+  }
+
+  .navbar .logo{
+    font-size:12px;
+    line-height:1.2;
+    white-space: normal;
+    max-width: 75%;
+  }
+
+  .navbar ul{
+    display:none;
+  }
+
+  body{
+    padding-top:60px;
+  }
+
+}
+
+/* ===== SIDEBAR MENU ===== */
+.sidebar-menu{
+    list-style:none;
+    padding:0;
+    margin:20px 0;
+}
+
+.sidebar-menu li{
+    margin-bottom:15px;
+}
+
+.sidebar-menu a{
+    color:white;
+    text-decoration:none;
+    font-size:16px;
+}
+.sidebar-menu a:hover{
+    color:#38bdf8;
+}
+.sidebar-menu a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:16px;
+}
+.sidebar-menu .icon{
+    font-size:18px;
+}
+
+@media (max-width:768px){
+
+  .navbar{
+    height:56px;
+    flex-direction: row;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 12px;
+  }
+
+  .navbar .logo{
+    font-size:13px;
+    max-width:70%;
+    line-height:1.2;
+    white-space:normal;
+  }
+
+  .navbar ul{
+    display:none;
+  }
+
+  body{
+    padding-top:56px;
+  }
+
+}
+
+.sidebar-menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:16px;
+    text-decoration:none;
+}
+
+.sidebar-menu svg{
+    width:22px;
+    height:22px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2;
+}
+
+/* SIDEBAR */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100%;
+    background:#020617;
+    padding:20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index:1500;
+    box-sizing: border-box;
+}
+
+#sidebar h3 {
+    color:#38bdf8;
+    margin-bottom:15px;
+}
+
+#sidebar button {
+    margin:5px 0;
+}
+
+/* SUPPORT CARD */
+.support-card {
+    background:#1e293b;
+    padding:15px 20px;
+    border-radius:12px;
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    color:#cbd5f5;
+    font-family: monospace;
+}
+
+.support-card .support-text {
+    font-size:12px;
+}
+
+.card-number-wrapper {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#020617;
+    padding:10px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    gap:10px;
+}
+
+.copy-btn {
+    background:none;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    padding:4px;
+}
+
+.copy-btn svg {
+    width:24px;
+    height:24px;
+    stroke:#ffffff;
+    transition:0.3s;
+}
+
+.copy-btn:hover svg {
+    stroke:#000000;
+}
+
+.card-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap; /* QATORGA TUSHMASIN */
+}
+
+.card-number {
+    white-space: nowrap;   /* ENG MUHIM QATOR */
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .card-number {
+        font-size: 14px; /* kichik ekran uchun */
+    }
+    .card-number {
+  margin-left: 10px;
+}
+}
+
+.copy-btn svg {
+    stroke: white;
+}
+
+/* OVERLAY */
+#overlay {
+    position: fixed;
+    inset:0;
+    background: rgba(0,0,0,0.5);
+    display:none;
+    z-index:1400;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+    #sidebar {
+        width: 220px;
+    }
+}
+
+/* KARTA QATORINI MAJBUR 1 QATOR QILISH */
+.card-number-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap !important;
+    gap: 6px;
+}
+
+/* KARTA RAQAMI HECH QACHON PASTGA TUSHMASIN */
+#cardNumber {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    flex-shrink: 1;
+    font-size: 14px;
+}
+
+/* ICON KICHIKROQ BO‘LSIN */
+.copy-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    #cardNumber {
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+}
+
+/* ORQA QORA FONNI KENGAYTIRISH */
+.support-card {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* MOBILDA YANADA QULAY */
+@media (max-width: 768px) {
+    .support-card {
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+}
+
+.card-number-wrapper {
+    min-width: 90%;
+}
+
+/* TELEFONDA SUPPORT-CARD NI KENGAYTIRISH */
+@media (max-width: 768px) {
+    .support-card {
+        margin-left: -12px;
+        margin-right: -12px;
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+}
+
+@media (max-width: 768px) {
+    .copy-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Botpress chat tugmasini yuqoriga ko‘tarish */
+.bpw-widget-container {
+  bottom: 140px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+}
+
+/* Chat bot tugmasini qimirlatish */
+.bpw-widget-container {
+  animation: botpressFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes botpressFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+
+    /* 🔥 MARKAZGA OLADI */
+    margin: 0 auto;
+    max-width: 90%;
+  }
+
+}
+
+.weather-mini-card {
+    position: absolute; /* Ekranda bir joyda qotib turishi uchun */
+    top: 50px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    /* Dastlabki fon */
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    transition: all 0.5s ease;
+    min-width: 80px;
+}
+
+.weather-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+}
+
+#w-icon { 
+    font-size: 24px; 
+    margin-bottom: 2px;
+}
+
+#w-city { 
+    font-size: 10px; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+}
+
+#w-temp {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* Telefonlar uchun (ekran kengligi 600px dan kichik bo'lganda) */
+@media (max-width: 600px) {
+    .weather-mini-card {
+        top: 60px;    /* Tepadagi masofani kamaytirish */
+        left: 10px;   /* Chapdagi masofani kamaytirish */
+        padding: 6px 10px; /* Ichki bo'shliqni kichraytirish */
+        min-width: 90px;
+    }
+
+    #w-icon { 
+        font-size: 18px; /* Ikonkani kichraytirish */
+    }
+
+    #w-city { 
+        font-size: 8px;  /* Shahar nomini kichraytirish */
+    }
+
+    #w-temp {
+        font-size: 24px; /* Harorat raqamini kichraytirish */
+    }
+
+    .weather-left {
+        margin-right: 10px; /* Ikkala qism orasidagi masofani kamaytirish */
+    }
+}
+    .modal-content textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin-bottom: 15px;
+    resize: none; /* Qo'lda cho'zishni o'chirish */
+    display: block;
+    min-height: 80px; 
+    max-height: 180px; 
+    overflow-y: hidden; /* Dastlab scroll yo'q */
+    line-height: 1.5;
+}
     </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
-    <div class="logo">Sayt namuna uchun yaratilgan. TEST REJIMIDA</div>
+    <div class="hamburger" onclick="openMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+    <div class="logo">Sayt namuna uchun yaratilgan. TEST REJIMIDA...</div>
     <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact</a></li>
     </ul>
 </nav>
+
+<div id="weather-widget" class="weather-mini-card">
+    <div class="weather-left">
+        <div id="w-icon">☀️</div> <div id="w-city">Toshkent</div> </div>
+    <div class="weather-right">
+        <span id="w-temp">--</span>° </div>
+</div>
+<!-- SIDEBAR -->
+<div id="sidebar">
+<ul class="sidebar-menu">
+
+    <li>
+        <a href="#home">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+            </svg>
+            Home
+        </a>
+    </li>
+
+    <li>
+        <a href="#about">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z"/>
+            </svg>
+            About
+        </a>
+    </li>
+
+    <li>
+        <a href="#skills">
+            <svg viewBox="0 0 24 24">
+                <path d="M14.7 6.3l3 3-8.4 8.4H6.3v-3zM17.4 3.6a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4l-1.9 1.9-3-3z"/>
+            </svg>
+            Skills
+        </a>
+    </li>
+
+    <li>
+        <a href="#portfolio">
+            <svg viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4zM8 2h8v2H8z"/>
+            </svg>
+            Portfolio
+        </a>
+    </li>
+
+</ul>
+    
+    <h3>Sozlamalar</h3>
+    <p>Til:</p>
+    <button>Lotin</button>
+    <button>Kiril</button>
+
+    <!-- SUPPORT CARD -->
+    <div class="support-card">
+        <p class="support-text">Bizni qo'llab quvvatlang 😉 (Mirjalol M.)</p>
+        <div class="card-number-wrapper">
+            <span id="cardNumber">5614 6849 0143 3258</span>
+            <button class="copy-btn" onclick="copyCardNumber()">
+              <!-- SVG COPY ICON -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#cbd5f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+        </div>
+        <small id="copyMessage" style="color:#38bdf8; display:none; margin-top:4px; font-size:12px;">Karta raqami nusxa olindi ✅</small>
+    </div>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeMenu()"></div>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeMenu()"></div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -247,14 +721,8 @@
 <!-- ABOUT -->
 <section id="about">
     <h2>Men haqimda</h2>
-    <p>
-        Men web dasturlashni endi o‘rganayotgan, lekin real loyihalar qilishga intilayotgan yosh dasturchiman.
-Kelajakda albatta zo'r dasturchi bo'lish harakatidaman.
-    </p>
-    Maqsadim — kuchli portfolio yig‘ish va tajriba orttirish.
-    </p>
+    <p>Men web dasturlashni endi o‘rganayotgan, lekin real loyihalar qilishga intilayotgan yosh dasturchiman. Kelajakda albatta zo'r dasturchi bo'lish harakatidaman.</p>
     <h2>HARAJATSIZ HARAKAT 0 GA TENG!</h2>
-    </p>
 </section>
 
 <!-- SKILLS -->
@@ -272,41 +740,31 @@ Kelajakda albatta zo'r dasturchi bo'lish harakatidaman.
 <section id="portfolio">
     <h2>Portfolio</h2>
     <div class="gallery">
-        <!-- 1-CARD (MODAL BOR) -->
         <div class="card">
             <img src="rasm1.jpg">
             <div class="card-content">
                 <h3>Landing Page</h3>
                 <p>HTML va CSS yordamida qilingan loyiha</p>
-                <button onclick="openModal()">Ko‘rish</button>
+                <button onclick="openModal(1)">Ko‘rish</button>
             </div>
         </div>
-
-        <!-- QOLGANLAR ODDIY -->
         <div class="card">
             <img src="rasm2.jpg">
             <div class="card-content">
                 <h3>Mini Portfolio</h3>
                 <p>Shaxsiy web portfolio</p>
-                <button>Ko‘rish</button>
+                <button onclick="openModal(2)">Ko‘rish</button>
             </div>
         </div>
-
         <div class="card">
             <img src="rasm3.jpg">
             <div class="card-content">
                 <h3>Simple JS App</h3>
                 <p>Oddiy JavaScript loyihasi</p>
-                <button>Ko‘rish</button>
+                <button onclick="openModal(3)">Ko‘rish</button>
             </div>
         </div>
     </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-    <h2>Aloqa</h2>
-    <p>Telegram: <a href="https://t.me/miroktamovich_05" target="_blank">@miroktamovich_05</a></p>
 </section>
 
 <!-- FOOTER -->
@@ -315,35 +773,375 @@ Kelajakda albatta zo'r dasturchi bo'lish harakatidaman.
     <p>Sayt test rejimida ishlayapdi.</p>
 </footer>
 
-<!-- MODAL -->
+<!-- PORTFOLIO MODAL -->
 <div class="modal" id="projectModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">×</span>
-        <img src="rasm1.jpg">
-        <h2>Landing Page</h2>
-        <p>
-            Bu loyiha HTML va CSS yordamida yaratilgan zamonaviy landing page.
-            Responsive dizayn va toza kod asosida ishlangan.
-        </p>
-        <p><strong>Texnologiyalar:</strong> HTML, CSS</p>
+        <img id="modalImg" src="">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <p id="modalTech"></p>
+
+        <button class="close-btn" onclick="closeModal()">Yopish</button>
+
     </div>
 </div>
 
+<!-- CONTACT BUTTON -->
+<button id="contactBtn" class="contact-btn">Xabar yuborish</button>
+
+<!-- CONTACT FORM MODAL -->
+<div id="contactModal" class="contact-modal">
+    <div class="contact-modal-content">
+        <span id="closeContact" class="close">×</span>
+        <h2>Xabar yuborish</h2>
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="47ac45bf-8cb5-4ac9-a74f-9dafef0494ce">
+
+    <div style="margin-bottom: 15px;">
+        <input type="text" name="name" id="name" placeholder="Ismingiz" required 
+               style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
+        <div id="nameError" style="color: red; font-size: 12px; margin-top: 5px; display: none; font-weight: bold;">
+            Ismda faqat harflar bo'lishi kerak! (Son yoki belgilar mumkin emas)
+        </div>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <input type="email" name="email" placeholder="Email" required 
+               style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <textarea id="message" placeholder="Xabaringiz" required 
+                  style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; resize: none;"></textarea>
+    </div>
+
+    <button type="submit" id="submitBtn" style="padding: 10px 20px; cursor: pointer;">Yuborish</button>
+</form>
+
 <script>
-    function showPortfolio() {
-        document.querySelector(".gallery").classList.add("show");
-        document.getElementById("portfolio")
-            .scrollIntoView({ behavior: "smooth" });
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    const nameInput = document.getElementById("name");
+    const nameError = document.getElementById("nameError");
+    const nameValue = nameInput.value.trim();
+
+    // REGEX: Faqat harflar va bo'shliqlar. Sonlar va belgilar mutlaqo taqiqlanadi.
+    const nameRegex = /^[a-zA-Z'‘`’\s]+$/;
+
+    // TEKSHIRUV:
+    if (!nameRegex.test(nameValue)) {
+        // 1. Formani yuborishni butunlay to'xtatish
+        e.preventDefault(); 
+        e.stopImmediatePropagation();
+
+        // 2. Vizual ko'rsatkichlar
+        nameInput.style.border = "2px solid red";
+        nameInput.style.backgroundColor = "#fff0f0";
+        nameError.style.display = "block";
+        
+        // 3. Fokusni ismga qaytarish
+        nameInput.focus();
+        
+        console.log("XABAR YUBORILMADI: Ismda xatolik bor!");
+        return false; // Funksiyadan chiqish
     }
 
-    function openModal() {
-        document.getElementById("projectModal").style.display = "flex";
-    }
+    // AGAR HAMMASI TO'G'RI BO'LSA:
+    nameInput.style.border = "1px solid #ccc";
+    nameInput.style.backgroundColor = "";
+    nameError.style.display = "none";
 
-    function closeModal() {
-        document.getElementById("projectModal").style.display = "none";
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.innerText = "Yuborilmoqda...";
+    submitBtn.disabled = true;
+
+    // AJAX orqali yuborish qismi
+    fetch(this.action, {
+        method: this.method,
+        body: new FormData(this)
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = "rahmat.html";
+        } else {
+            alert("Xatolik yuz berdi!");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Yuborish";
+        }
+    })
+    .catch(error => {
+        console.error("Xato:", error);
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Yuborish";
+    });
+});
+</script>
+    </div>
+</div>
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+  e.preventDefault(); // standart submitni to'xtatamiz
+
+  fetch(this.action, {
+    method: this.method,
+    body: new FormData(this)
+  })
+  .then(response => {
+    if (response.ok) {
+      // muvaffaqiyatli yuborilgach → rahmat.html ga o'tish
+      window.location.href = "rahmat.html";
+    } else {
+      // agar server xatolik qaytarsa
+      alert("Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.");
     }
+  })
+  .catch(error => {
+    console.error("Xatolik yuz berdi:", error);
+    alert("Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.");
+  });
+});
 </script>
 
+<script>
+/* PORTFOLIO DATA */
+const projects = {
+    1: {img:"rasm1.jpg", title:"Landing Page", desc:"HTML va CSS yordamida yaratilgan zamonaviy landing page. Responsive dizayn va toza kod asosida ishlangan.", tech:"Texnologiyalar: HTML, CSS"},
+    2: {img:"rasm2.jpg", title:"Mini Portfolio", desc:"Shaxsiy web portfolio, o‘zimning loyihalarimni to‘plagan sayt. Toza dizayn va oddiy navigatsiya mavjud.", tech:"Texnologiyalar: HTML, CSS, JS"},
+    3: {img:"rasm3.jpg", title:"Simple JS App", desc:"Oddiy JavaScript loyihasi, interaktiv elementlar bilan ishlaydi. Foydalanuvchi bilan oson aloqada bo‘lish imkonini beradi.", tech:"Texnologiyalar: HTML, CSS, JS"}
+};
+
+function openModal(id){
+    const modal = document.getElementById("projectModal");
+    modal.style.display="flex";
+    document.getElementById("modalImg").src = projects[id].img;
+    document.getElementById("modalTitle").innerText = projects[id].title;
+    document.getElementById("modalDesc").innerText = projects[id].desc;
+    document.getElementById("modalTech").innerText = projects[id].tech;
+}
+function closeModal(){
+    const modal = document.getElementById("projectModal");
+    modal.classList.add("fade-out");
+
+    setTimeout(() => {
+        modal.style.display = "none";
+        modal.classList.remove("fade-out");
+    }, 400);
+}
+
+function showPortfolio(){ document.querySelector(".gallery").classList.add("show"); document.getElementById("portfolio").scrollIntoView({behavior:"smooth"}); }
+
+/* CONTACT MODAL */
+const contactBtn = document.getElementById("contactBtn");
+const contactModal = document.getElementById("contactModal");
+const closeContact = document.getElementById("closeContact");
+
+contactBtn.addEventListener("click", ()=>{ contactModal.style.display="flex"; });
+closeContact.addEventListener("click", ()=>{ contactModal.style.display="none"; });
+contactModal.addEventListener("click", (e)=>{ if(e.target===contactModal) contactModal.style.display="none"; });
+
+/* CONTACT FORM VALIDATION */
+const contactForm = document.querySelector("#contactModal form");
+const nameInput = contactForm.name;
+const nameError = document.getElementById("nameError");
+
+const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿʻʼ’‘\s]+$/;
+
+contactForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+
+    // reset
+    nameError.style.display = "none";
+    nameInput.classList.remove("input-error");
+
+    if(name === "") {
+        nameError.innerText = "Iltimos, ismingizni kiriting!";
+        nameError.style.display = "block";
+        nameInput.classList.add("input-error");
+        return;
+    }
+
+    if(!nameRegex.test(name)) {
+        nameError.innerText = "Ismda son yoki maxsus belgi bo‘lishi mumkin emas!";
+        nameError.style.display = "block";
+        nameInput.classList.add("input-error");
+        return;
+    }
+
+    // hammasi to‘g‘ri bo‘lsa
+    contactForm.submit();
+});
+
+/* REAL-TIME TOZALASH */
+nameInput.addEventListener("input", () => {
+    nameError.style.display = "none";
+    nameInput.classList.remove("input-error");
+});
+
+
+contactForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = contactForm.name;
+    const email = contactForm.email;
+    const message = contactForm.message;
+
+    let valid = true;
+
+    if(name.value.trim() === "") {
+        showError(name, "Iltimos, ismingizni kiriting!");
+        valid = false;
+    } else if(!nameRegex.test(name.value.trim())) {
+        showError(name, "Ismda son yoki maxsus belgi bo‘lishi mumkin emas!");
+        valid = false;
+    }
+
+    if(email.value.trim() === "") {
+        showError(email, "Emailni kiriting!");
+        valid = false;
+    } else if(!emailRegex.test(email.value.trim())) {
+        showError(email, "Email noto‘g‘ri formatda!");
+        valid = false;
+    }
+
+    if(message.value.trim() === "") {
+        showError(message, "Xabar bo‘sh bo‘lishi mumkin emas!");
+        valid = false;
+    }
+
+    if(valid) {
+        contactForm.submit();
+    }
+});
+
+  /* SIDEBAR FUNKSIYALARI */
+  function openMenu(){
+      document.getElementById("sidebar").style.transform = "translateX(0)";
+      document.getElementById("overlay").style.display = "block";
+  }
+
+  function closeMenu(){
+      document.getElementById("sidebar").style.transform = "translateX(-100%)";
+      document.getElementById("overlay").style.display = "none";
+  }
+
+  /* COPY CARD NUMBER */
+  function copyCardNumber(){
+      const card = document.getElementById("cardNumber").innerText;
+      const msg = document.getElementById("copyMessage");
+
+      navigator.clipboard.writeText(card).then(() => {
+          msg.style.display = "block"; 
+          setTimeout(() => { msg.style.display = "none"; }, 2000); 
+      }).catch(() => {
+          msg.innerText = "Karta raqamni nusxa olishda xatolik ❌";
+          msg.style.display = "block";
+          setTimeout(() => { msg.style.display = "none"; }, 2000);
+      });
+  }
+
+</script>
+
+<script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js" defer></script>
+<script src="https://files.bpcontent.cloud/2026/01/24/20/20260124200447-RRCLSPQK.js" defer></script>
+<!-- BOTPRESS CHAT BOT -->
+<script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js" defer></script>
+<script src="https://files.bpcontent.cloud/2026/01/24/20/20260124200447-RRCLSPQK.js" defer></script>
+
+<script>
+  window.botpressWebChat.init({
+    botId: 'SIZNING_BOT_ID',
+    host: 'https://cdn.botpress.cloud/webchat',
+    styles: {
+      backgroundColor: '#1e293b',
+      headerBackgroundColor: '#38bdf8',
+      botMessageColor: '#e5e7eb',
+      userMessageColor: '#000000',
+      bubbleBackground: '#020617',
+      buttonBackground: '#38bdf8',
+      buttonTextColor: '#000000',
+      inputBackground: '#0f172a',
+      inputTextColor: '#ffffff',
+    },
+    mobile: {
+      bottom: 90 // Xabar yuborish tugmasi ustiga ko‘tarish (px bilan)
+    }
+  })
+</script>
+
+<script>
+const API_KEY = "92441c2f8628c7b820ceb2b5187bc86b";
+const city = "Tashkent";
+
+async function updateWeather() {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=uz`);
+        const data = await response.json();
+
+        if (data.cod !== 200) {
+            console.log("Xatolik: API kalit noto'g'ri yoki shahar topilmadi");
+            return;
+        }
+
+        const temp = Math.round(data.main.temp);
+        const condition = data.weather[0].main.toLowerCase();
+        const widget = document.getElementById("weather-widget");
+
+        // Haroratni yangilash
+        document.getElementById("w-temp").innerText = temp;
+        
+        // Ob-havo holatiga qarab ikonka va fonni o'zgartirish
+        let icon = "☀️";
+        let bg = "linear-gradient(135deg, #f6d365, #fda085)"; // Quyoshli (Sariq/To'q sariq)
+
+        if (condition.includes("cloud")) {
+            icon = "☁️";
+            bg = "linear-gradient(135deg, #757F9A, #D7DDE8)"; // Bulutli (Kulrang)
+        } else if (condition.includes("rain") || condition.includes("drizzle")) {
+            icon = "🌧️";
+            bg = "linear-gradient(135deg, #2c3e50, #4ca1af)"; // Yomg'ir (To'q ko'k)
+        } else if (condition.includes("snow")) {
+            icon = "❄️";
+            bg = "linear-gradient(135deg, #83a4d4, #b6fbff)"; // Qor (Oqish/Moviy)
+        } else if (condition.includes("clear")) {
+            icon = "☀️";
+            bg = "linear-gradient(135deg, #FF8C00, #FFD700)"; // Ochiq havo
+        }
+
+        document.getElementById("w-icon").innerText = icon;
+        widget.style.background = bg;
+
+    } catch (error) {
+        console.error("Ma'lumot olishda xatolik yuz berdi:", error);
+    }
+}
+
+// Sahifa yuklanishi bilan ob-havoni yangilash
+window.addEventListener('DOMContentLoaded', updateWeather);
+</script>
+<script>
+    // Sahifa to'liq yuklangandan keyin ishga tushishi uchun:
+document.addEventListener('DOMContentLoaded', function() {
+    const textArea = document.getElementById('message');
+
+    if (textArea) { // Agar element topilsagina ishlaydi
+        textArea.addEventListener("input", function() {
+            // Balandlikni hisoblashdan oldin qayta tiklaymiz
+            this.style.height = 'auto';
+            
+            const maxHeight = 180; // CSS dagi max-height bilan bir xil
+            
+            if (this.scrollHeight >= maxHeight) {
+                this.style.height = maxHeight + 'px';
+                this.style.overflowY = 'auto'; // Cheklovga yetganda scroll chiqadi
+            } else {
+                this.style.height = this.scrollHeight + 'px';
+                this.style.overflowY = 'hidden'; // Ungacha scroll yashirin
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
